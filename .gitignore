@@ -1,0 +1,38 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+.claude
+
+# Data files (contains personal time tracking data)
+Tracker.xlsx
+*.xlsx
+
+# Local runtime config (contains your personal/client details)
+# Seeded from config.example.json on first run.
+config.json
+.env
+.env.local
+
+# Test / tooling artifacts
+.playwright-mcp
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

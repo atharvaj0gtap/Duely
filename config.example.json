@@ -1,0 +1,25 @@
+{
+  "contractor": {
+    "name": "Your Name",
+    "email": "you@example.com",
+    "paymentEmail": "you@example.com"
+  },
+  "client": {
+    "name": "Client Company Inc.",
+    "address": "123 Main Street",
+    "city": "Your City",
+    "province": "ST",
+    "postalCode": "A1B 2C3",
+    "country": "Country"
+  },
+  "payment": {
+    "hourlyRate": 50,
+    "currency": "CAD",
+    "currencySymbol": "$"
+  },
+  "payPeriod": {
+    "referenceStartDate": "2025-01-05",
+    "periodLengthDays": 14,
+    "paymentDaysAfterPeriodEnd": 6
+  }
+}
