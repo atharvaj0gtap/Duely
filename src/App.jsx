@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { getInvoiceNumber, getPayPeriodRange } from './utils/invoiceUtils'
 import { useConfig } from './config/useConfig'
 import InvoiceModal from './components/InvoiceModal'
+import SettingsModal from './components/SettingsModal'
 
 // Get today's date in YYYY-MM-DD format using local timezone
 const getLocalDateString = () => {
@@ -11,6 +12,11 @@ const getLocalDateString = () => {
   const day = String(today.getDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
 }
+
+// A fresh install (config seeded from config.example.json) still has the
+// placeholder name — treat that as "not set up yet" and open Settings first.
+const needsSetup = (config) =>
+  !config.contractor?.name?.trim() || config.contractor.name === 'Your Name'
 
 function App() {
   const { config } = useConfig()
@@ -26,6 +32,7 @@ function App() {
   const [editingIndex, setEditingIndex] = useState(null)
   const [editData, setEditData] = useState(null)
   const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState(false)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(() => needsSetup(config))
   const editingRowRef = useRef(null)
   const editDataRef = useRef(null)
   const editingIndexRef = useRef(null)
@@ -234,15 +241,28 @@ function App() {
             <h1 className="text-3xl font-bold text-gray-900">Duely</h1>
             <p className="text-gray-600">Track your contractor hours and generate invoices</p>
           </div>
-          <button
-            onClick={() => setIsInvoiceModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer shadow-sm"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Generate Invoice
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsSettingsOpen(true)}
+              title="Settings"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer shadow-sm"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Settings
+            </button>
+            <button
+              onClick={() => setIsInvoiceModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer shadow-sm"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Generate Invoice
+            </button>
+          </div>
         </header>
 
         {error && (
@@ -473,6 +493,14 @@ function App() {
         onClose={() => setIsInvoiceModalOpen(false)} 
         entries={entries}
       />
+
+      {/* Settings Modal */}
+      {isSettingsOpen && (
+        <SettingsModal
+          onClose={() => setIsSettingsOpen(false)}
+          firstRun={needsSetup(config)}
+        />
+      )}
     </div>
   )
 }

@@ -7,7 +7,7 @@ pay periods.
 Everything runs on your own machine and your data stays in local files. No
 account, no cloud, no one else can see your hours.
 
-![Duely — the work log with the add-entry form and live pay-period preview](src/assets/Screenshot.png)
+![Duely — the work log with the add-entry form and live pay-period preview](src/assets/Dashboard.png)
 
 ## Features
 
@@ -70,12 +70,18 @@ npm run dev
 
 ## Configuration
 
-Your personal and business details are **not** stored in the source code. On
-first run the server creates a local `config.json` from the committed
-`config.example.json` template. `config.json` is git-ignored, so your details
-stay private and never get committed.
+Duely is configured from an in-app **Settings** screen — no source code or JSON
+editing required. On first launch, before any details are filled in, it opens
+automatically; after that, open it anytime from the **Settings** button (gear
+icon) in the header. Enter your details and click **Save settings**.
 
-To set up your details, edit `config.json` in the project root:
+![Duely Settings screen](src/assets/Settings.png)
+
+Your details are saved to a local `config.json` in the project root, created on
+first run from the committed `config.example.json` template. `config.json` is
+**git-ignored**, so your information stays private and is never committed.
+
+Prefer to edit the file by hand? It has this shape:
 
 ```json
 {
@@ -112,8 +118,8 @@ To set up your details, edit `config.json` in the project root:
   pay-period calendar; `periodLengthDays` is the period length (14 = bi-weekly);
   `paymentDaysAfterPeriodEnd` is how many days after the period ends you get paid
 
-Reload the app after editing `config.json`. (An in-app Settings screen for
-editing these without touching the file is planned.)
+If you edit `config.json` by hand, reload the app to pick up the changes. (Saving
+from the Settings screen applies immediately — no reload needed.)
 
 ## Usage
 
@@ -190,6 +196,12 @@ duely/
 | DELETE | `/api/entries/:index` | Delete an entry |
 | GET | `/api/config` | Get the runtime config |
 | PUT | `/api/config` | Replace the runtime config |
+
+## Feedback & Contributing
+
+Found a bug or have an idea to make Duely better? Please **[open an issue](../../issues)** — it's the best way to reach me, and all you need is a free GitHub account.
+
+This is a personal project, so I may not merge pull requests, but bug reports, questions, and suggestions are genuinely welcome.
 
 ## License
 
