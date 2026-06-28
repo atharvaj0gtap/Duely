@@ -7,6 +7,8 @@ pay periods.
 Everything runs on your own machine and your data stays in local files. No
 account, no cloud, no one else can see your hours.
 
+![Duely — the work log with the add-entry form and live pay-period preview](Screenshot.png)
+
 ## Features
 
 - **Track Work Hours**: Log tasks with date, description, and hours worked
